@@ -106,19 +106,21 @@ class Scene:
             ''',
         )
 
-        self.texture = ImageTexture('examples/data/textures/crate.png')
+        self.texture = ImageTexture('./peely.png')
+        self.texture2 = ImageTexture('./tec.jpg')
 
-        self.car_geometry = ModelGeometry('examples/data/models/lowpoly_toy_car.obj')
-        self.car = Mesh(self.program, self.car_geometry)
 
-        self.crate_geometry = ModelGeometry('examples/data/models/crate.obj')
+        self.car_geometry = ModelGeometry('./peely.obj')
+        self.car = Mesh(self.program, self.car_geometry,self.texture2)
+
+        self.crate_geometry = ModelGeometry('./peely.obj')
         self.crate = Mesh(self.program, self.crate_geometry, self.texture)
 
     def camera_matrix(self):
         now = pygame.time.get_ticks() / 1000.0
-        eye = (math.cos(now), math.sin(now), 0.5)
+        eye = (math.cos(now) * 0.5, math.sin(now) * 0.5, 0.2)
         proj = glm.perspective(45.0, 1.0, 0.1, 1000.0)
-        look = glm.lookAt(eye, (0.0, 0.0, 0.0), (0.0, 0.0, 1.0))
+        look = glm.lookAt(eye, (0.0, 0.0, 0.0), (0.0, 1.0, 0.0))
         return proj * look
 
     def render(self):
